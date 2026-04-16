@@ -24,8 +24,8 @@ jobs:
         with:
           gradle-version: '9.2.0'
 
-      - name: Build with Gradle on ARM64
-        run: gradle build --no-daemon --stacktrace
+      - name: Build proxy-only modules on ARM64
+        run: gradle :api:jar :common:jar :proxy:jar --no-daemon --stacktrace
 
       - name: Inspect native libs in proxy jar
         run: |
@@ -40,18 +40,18 @@ jobs:
           retention-days: 7
           if-no-files-found: error
 
-      - name: Upload bridge artifact
+      - name: Upload api artifact
         uses: actions/upload-artifact@v4
         with:
-          name: bridge-arm64
-          path: bridge/build/libs/*.jar
+          name: api-arm64
+          path: api/build/libs/*.jar
           retention-days: 7
           if-no-files-found: error
 
-      - name: Upload bridge-packets artifact
+      - name: Upload common artifact
         uses: actions/upload-artifact@v4
         with:
-          name: bridge-packets-arm64
-          path: bridge-packets/build/libs/*.jar
+          name: common-arm64
+          path: common/build/libs/*.jar
           retention-days: 7
           if-no-files-found: error
